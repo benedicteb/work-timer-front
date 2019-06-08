@@ -1,33 +1,66 @@
 .App {
-  text-align: center;
+    width: 70%;
+    margin: auto;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.Week {
+    margin: 10px 0;
+    padding: 0 0 20px 0;
+    border: 1px solid black;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.WeekHeader {
+    background-color: red;
+    padding: 5px;
+    border-bottom: 1px solid black;
 }
 
-.App-link {
-  color: #61dafb;
+.WeekHeader h1 {
+    margin: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.WeekDay {
+    margin: 10px;
+}
+
+.WeekDay h2 {
+    margin: 0;
+}
+
+.DayGrid {
+    width: 100%;
+}
+
+.DayGridHours {
+    height: 40px;
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    justify-content: space-evenly;
+}
+
+.DayGridHour {
+    border-right: 1px solid rgba(179, 179, 179, 0.69);
+    width: 100%;
+    position: relative;
+}
+
+.DayGridHour:nth-child(4n) {
+    border-width: 1.5px;
+    border-right-color: rgba(255, 0, 0, 0.46);
+}
+
+.DayGridHour:last-child {
+    border-right: none;
+}
+
+.DayGridHourWorkday {
+    background-color: rgba(204, 204, 255, 0.14);
+}
+
+.DayGridHourMarkers {
+    width: 100%;
+}
+
+.DayGridHourMarker {
+    position: relative;
 }
