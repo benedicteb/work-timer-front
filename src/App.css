@@ -1,6 +1,8 @@
 .App {
     width: 70%;
+    height: 100%;
     margin: auto;
+    position: relative;
 }
 
 .Week {
@@ -29,6 +31,7 @@
 
 .DayGrid {
     width: 100%;
+    padding: 10px 0;
 }
 
 .DayGridHours {
@@ -62,5 +65,22 @@
 }
 
 .DayGridHourMarker {
+    position: relative;
+}
+
+.Footer {
+    background-color: blue;
+    position: absolute;
+    bottom: 0;
+}
+
+.ControlPanel {
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+}
+
+.Scrollable {
+    overflow: auto;
     position: relative;
 }

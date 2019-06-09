@@ -1,75 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { getCategories } from "./workTimerService";
+import Week from "./components/Week";
 
-const DayGrid: React.FC = () => {
-  const now = new Date();
-  const dayFraction =
-    (now.getHours() + now.getMinutes() / 60 + now.getSeconds() / (60 * 60)) /
-    24;
-  const leftPercent = 100 * dayFraction;
-
+const ControlPanel: React.FC = () => {
   return (
-    <div className={"DayGrid"}>
-      <div>
-        <div style={{ position: "relative", left: `${leftPercent}%` }}>
-          <FontAwesomeIcon
-            style={{ position: "relative", left: "-5px", width: "10px" }}
-            icon={faSortDown}
-            size={"1x"}
-          />
-        </div>
-      </div>
-      <div className={"DayGridHours"}>
-        {Array.from(Array(24).keys()).map(hour => {
-          if (hour >= 8 && hour < 16) {
-            return (
-              <div
-                key={hour}
-                data-hour={hour}
-                className={"DayGridHour DayGridHourWorkday"}
-              />
-            );
-          }
-
-          return <div key={hour} data-hour={hour} className={"DayGridHour"} />;
-        })}
-      </div>
+    <div className={"ControlPanel"}>
+      <p>Hello world</p>
     </div>
   );
 };
-
-const Week: React.FC<{ weekNumber: number }> = ({ weekNumber }) => (
-  <div className={"Week"}>
-    <div className={"WeekHeader"}>
-      <h1>Week {weekNumber}</h1>
-    </div>
-    <div className={"WeekDays"}>
-      <div className={"WeekDay"}>
-        <h2>Monday</h2>
-        <DayGrid />
-      </div>
-      <div className={"WeekDay"}>
-        <h2>Tuesday</h2>
-        <DayGrid />
-      </div>
-      <div className={"WeekDay"}>
-        <h2>Wednesday</h2>
-        <DayGrid />
-      </div>
-      <div className={"WeekDay"}>
-        <h2>Thursday</h2>
-        <DayGrid />
-      </div>
-      <div className={"WeekDay"}>
-        <h2>Friday</h2>
-        <DayGrid />
-      </div>
-    </div>
-  </div>
-);
 
 const App: React.FC<{ initialCategories?: Category[] }> = ({
   initialCategories
@@ -88,7 +28,16 @@ const App: React.FC<{ initialCategories?: Category[] }> = ({
 
   return (
     <div className="App">
-      <Week weekNumber={23} />
+      <div className={"Scrollable"}>
+        <Week weekDiff={0} />
+        <Week weekDiff={-1} />
+        <Week weekDiff={-2} />
+        <Week weekDiff={-3} />
+        <Week weekDiff={-4} />
+      </div>
+      <div className={"Footer"}>
+        <ControlPanel />
+      </div>
     </div>
   );
 };
