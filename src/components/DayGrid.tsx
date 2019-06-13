@@ -28,7 +28,13 @@ const DayGrid: React.FC<{ date: Date; events: Event[] }> = ({
     <div className={"DayGrid"}>
       {isToday ? (
         <div>
-          <div style={{ position: "relative", left: `${leftPercent}%` }}>
+          <div
+            style={{
+              position: "relative",
+              left: `${leftPercent}%`,
+              width: "20px"
+            }}
+          >
             <FontAwesomeIcon
               style={{ position: "relative", left: "-5px", width: "10px" }}
               icon={faSortDown}

@@ -43,6 +43,12 @@ const Week: React.FC<{ weekDiff: number }> = ({ weekDiff }) => {
           .reverse()
           .map(dayNumber => {
             const date = new Date(monday.getTime() + dayNumber * millisPerDay);
+            const now = new Date();
+
+            if (date > now) {
+              return;
+            }
+
             const dayName = DAY_NAMES[date.getDay()];
             const monthName = MONTH_SHORT_NAMES[date.getMonth()];
 

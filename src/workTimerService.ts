@@ -1,7 +1,7 @@
 import { isLocalhost } from "./serviceWorker";
 
 const URL_BASE = isLocalhost ? "" : "https://api.work-timer.benedicte.dev";
-const SECRET_KEY = "duerkul";
+const SECRET_KEY = "abc123";
 
 export const getCategories = () => {
   return fetch(`${URL_BASE}/categories`, {
@@ -23,17 +23,23 @@ export const getCategories = () => {
 };
 
 export const createCategory = (name: string) => {
-  return fetch(`${URL_BASE}/categories`, {
+  return fetch(`${URL_BASE}/category`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${SECRET_KEY}`
+      Authorization: `Bearer ${SECRET_KEY}`,
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({ categoryName: name })
-  }).then(response => {
-    if (!response.ok) {
-      throw Error("Failed");
-    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error("Failed");
+      }
 
-    return response;
-  });
+      return response;
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => json as Category);
 };
