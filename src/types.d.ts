@@ -1,4 +1,4 @@
-type Event = {
+type TimerEvent = {
   created: string;
   start: string;
   end?: string;

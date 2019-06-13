@@ -43,3 +43,62 @@ export const createCategory = (name: string) => {
     })
     .then(json => json as Category);
 };
+
+export const getRunningEvents = () => {
+  return fetch(`${URL_BASE}/events?running=1`, {
+    headers: {
+      Authorization: `Bearer ${SECRET_KEY}`
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error("Failed");
+      }
+
+      return response;
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => json as { events: TimerEvent[] });
+};
+
+export const startCategoryEvent = (category: Category) => {
+  return fetch(`/category/${category.id}/start`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${SECRET_KEY}`
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error("Failed");
+      }
+
+      return response;
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => json as TimerEvent);
+};
+
+export const stopCategoryEvent = (category: Category) => {
+  return fetch(`/category/${category.id}/stop`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${SECRET_KEY}`
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error("Failed");
+      }
+
+      return response;
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => json as TimerEvent);
+};

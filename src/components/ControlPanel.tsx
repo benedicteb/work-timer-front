@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { getCategories } from "../workTimerService";
+import { getCategories, getRunningEvents } from "../workTimerService";
 import AddCategoryButton from "./AddCategoryButton";
 import CategoryButton from "./CategoryButton";
 
 const ControlPanel: React.FC = () => {
   const initialCategories: Category[] = [];
+  const initialRunningEvents: TimerEvent[] = [];
+
   const [categories, setCategories] = useState(initialCategories);
+  const [runningEvents, updateRunningEvents] = useState(initialRunningEvents);
+
+  const refreshRunningEvents = () => {
+    getRunningEvents()
+      .then(events => {
+        updateRunningEvents(events.events);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
     getCategories()
@@ -17,6 +30,10 @@ const ControlPanel: React.FC = () => {
       });
   }, []);
 
+  useEffect(() => {
+    refreshRunningEvents();
+  }, []);
+
   return (
     <div className={"ControlPanel"}>
       <AddCategoryButton
@@ -26,8 +43,34 @@ const ControlPanel: React.FC = () => {
 
       <div className={"CategoryButtons"}>
         {categories.map(category => {
+          const eventsSorted = runningEvents
+            .filter(event => {
+              if (event.category_id === category.id) {
+                return true;
+              }
+
+              return false;
+            })
+            .sort((a, b) => {
+              if (a.start > b.start) {
+                return 1;
+              } else if (b.start > a.start) {
+                return -1;
+              } else {
+                return 0;
+              }
+            });
+
+          const oldestRunningEvent =
+            eventsSorted.length > 0 ? eventsSorted[0] : undefined;
+
           return (
-            <CategoryButton key={category.id} categoryName={category.name} />
+            <CategoryButton
+              key={category.id}
+              category={category}
+              oldestRunningEvent={oldestRunningEvent}
+              refreshRunningEvents={refreshRunningEvents}
+            />
           );
         })}
       </div>
