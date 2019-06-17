@@ -63,6 +63,28 @@ export const getRunningEvents = () => {
     .then(json => json as { events: TimerEvent[] });
 };
 
+export const getEvents = (after: Date, before: Date) => {
+  return fetch(
+    `${URL_BASE}/events?before=${before.toISOString()}&after=${after.toISOString()}`,
+    {
+      headers: {
+        Authorization: `Bearer ${SECRET_KEY}`
+      }
+    }
+  )
+    .then(response => {
+      if (!response.ok) {
+        throw Error("Failed");
+      }
+
+      return response;
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => json as { events: TimerEvent[] });
+};
+
 export const startCategoryEvent = (category: Category) => {
   return fetch(`/category/${category.id}/start`, {
     method: "POST",

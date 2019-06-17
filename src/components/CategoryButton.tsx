@@ -29,10 +29,23 @@ const CategoryButton: React.FC<{
   const backgroundColorStyle =
     oldestRunningEvent !== undefined ? { backgroundColor: "yellow" } : {};
 
-  const statusText =
+  const runtimeMillis =
     oldestRunningEvent !== undefined
-      ? ` (${now.getTime() - new Date(oldestRunningEvent.start).getTime()})`
-      : null;
+      ? now.getTime() - new Date(oldestRunningEvent.start).getTime()
+      : 0;
+
+  const runtimeHours = Math.trunc(runtimeMillis / (1000 * 60 * 60));
+  const runtimeMinutes = Math.trunc(
+    (runtimeMillis % (1000 * 60 * 60)) / (1000 * 60)
+  );
+  const runtimeSeconds = Math.trunc(
+    ((runtimeMillis % (1000 * 60 * 60)) % (1000 * 60)) / 1000
+  );
+
+  const runtimeText =
+    runtimeMillis > 0
+      ? `${runtimeHours}:${runtimeMinutes}:${runtimeSeconds}`
+      : "";
 
   return (
     <button
@@ -41,7 +54,7 @@ const CategoryButton: React.FC<{
       className={"CategoryButton"}
     >
       {category.name}
-      {statusText}
+      {runtimeText}
     </button>
   );
 };

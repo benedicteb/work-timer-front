@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 export const getWeekNumber = (d: Date) => {
   // Copy date so don't modify original
   const newD = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -25,4 +27,55 @@ export const getMonday = (d: Date) => {
   monday.setMilliseconds(0);
 
   return monday;
+};
+
+export const DAY_NAMES: { [id: number]: string } = {
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday",
+  0: "Sunday"
+};
+
+export const MONTH_SHORT_NAMES: string[] = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "June",
+  "July",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec"
+];
+
+/**
+ * 2019-06-17 Stolen from:
+ * https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+ */
+export const useInterval = (callback: () => any, delay: number) => {
+  const savedCallback = useRef<() => any>();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      if (savedCallback.current) {
+        savedCallback.current();
+      }
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
 };

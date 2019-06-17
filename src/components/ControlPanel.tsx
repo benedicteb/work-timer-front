@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getCategories, getRunningEvents } from "../workTimerService";
 import AddCategoryButton from "./AddCategoryButton";
 import CategoryButton from "./CategoryButton";
+import { useInterval } from "../utils";
 
 const ControlPanel: React.FC = () => {
   const initialCategories: Category[] = [];
@@ -33,6 +34,10 @@ const ControlPanel: React.FC = () => {
   useEffect(() => {
     refreshRunningEvents();
   }, []);
+
+  useInterval(() => {
+    refreshRunningEvents();
+  }, 1000);
 
   return (
     <div className={"ControlPanel"}>
